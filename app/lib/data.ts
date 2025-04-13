@@ -30,6 +30,12 @@ export async function fetchRevenue() {
   }
 }
 
+  /**
+   * Fetches the latest 5 invoices from the database.
+   *
+   * @returns An array of the latest 5 invoices, with the amount formatted as a string.
+   * @throws {Error} If there is an error fetching the data from the database.
+   */
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw[]>`
@@ -204,12 +210,13 @@ export async function fetchFilteredCustomers(query: string) {
 		ORDER BY customers.name ASC
 	  `;
 
+
+
     const customers = data.map((customer) => ({
       ...customer,
       total_pending: formatCurrency(customer.total_pending),
       total_paid: formatCurrency(customer.total_paid),
     }));
-
     return customers;
   } catch (err) {
     console.error('Database Error:', err);
