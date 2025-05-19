@@ -34,27 +34,29 @@ export const { auth, signIn, signOut } = NextAuth({
        * @param credentials The user's email and password.
        * @returns The user data if the credentials are valid and the passwords match, otherwise `null`.
        */
-      async authorize(credentials) {
-        const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
-          .safeParse(credentials);
- 
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
+async authorize(credentials): Promise<User | null> {
+  const parsedCredentials = z
+    .object({ email: z.string().email(), password: z.string().min(6) })
+    .safeParse(credentials);
 
-          if (!user) return null;
-              const passwordsMatch = await bcrypt.compare(password, user.password);
+  if (!parsedCredentials.success) {
+    console.error('Failed to parse credentials:', parsedCredentials.error.flatten());
+    return null;
+  }
 
-              if (passwordsMatch) {
-                return user;
-              }
-        }
- 
-        console.error('Invalid credentials');
- 
-        return null;
-      },
+  const { email, password } = parsedCredentials.data;
+  const user = await getUser(email);
+
+  if (!user) return null;
+
+  const passwordsMatch = await bcrypt.compare(password, user.password);
+  if (passwordsMatch) {
+    return user;
+  }
+
+  console.error('Invalid credentials or password mismatch');
+  return null;
+}
     }),
   ],
 });
