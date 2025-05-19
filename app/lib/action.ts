@@ -3,6 +3,8 @@ import { z } from 'zod';
 import postgres from 'postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 
 export type State = {
@@ -117,4 +119,31 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
   revalidatePath('/dashboard/invoices');
 
 
+}
+
+
+
+/**
+ * Handles authentication for the login form
+ * @param prevState The previous state of the form (unused)
+ * @param formData The form data from the login form
+ * @returns A string indicating the error message if authentication fails
+ */
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
 }

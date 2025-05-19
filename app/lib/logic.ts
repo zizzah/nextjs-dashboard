@@ -1,216 +1,375 @@
+import { error } from "console";
+import { RedirectType } from "next/navigation";
 
+function sumTo(n: number): number {
+    return n * (n + 1) / 2;
+}
 
-/*************  ✨ Windsurf Command 🌟  *************/
+function average(arr: number[]): number {
+    if (arr.length === 0) return 0;
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
 
-import { truncate } from "fs";
-import { array } from "zod";
-
-/**
- * Function to find the largest number in an array
- * @param arr - Array of numbers
- */
-function findTheLargestAndSmallest(arr: number[]): [number, number] | number {
-    let largest = arr[0];
-    let smallest = arr[0];
-
-    // loop through the array
+function minValue(arr: number[]): number {
+    if (arr.length === 0) return 0;
+    let min = arr[0];
     for (let i = 1; i < arr.length; i++) {
-        if (arr[i] > largest) {
-            largest = arr[i];
-        }
-    else{
-        if (arr[i] < smallest) {
-            smallest = arr[i];
+        if (arr[i] < min) {
+            min = arr[i];
         }
     }
-    }
+    return min;
+}
 
-    return [ largest,smallest];
-/*******  ede3c763-bf5d-4569-bc02-053b280154d1  *******/}
-
-
-/**
- * Function to calculate the sum of even and odd numbers in an array.
- * @param arr - Array of numbers
- * @returns The sum of even and odd numbers
- */
-function theSumOfEvenAndoddNumbers(arr: number[]): [number, number] {
-    let evenSum: number = 0;
-    let oddSum: number = 0;
-
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] % 2 === 0) {
-            evenSum += arr[i];
-        } else {
-            oddSum += arr[i];
+function maxValue(arr: number[]): number {
+    if (arr.length === 0) return 0;
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
         }
     }
-
-    return [evenSum, oddSum];
+    return max;
 }
 
-function countFrequenOfCharacter(str:string, char:string): number {
-  return str.split(char).length - 1
+function isEven(n: number): boolean {
+    return n % 2 === 0;
 }
 
 
-function reverseString(str :string): string{
-let reverseString = "";
-for (let i = str.length - 1; i >= 0; i--) {
-  reverseString += str[i];
-}
-return reverseString
-}
 
-/*************  ✨ Windsurf Command 🌟  *************/
-/**
- * Prints the numbers from 1 to the given number, but for multiples of 3 prints 'fizz'
- * and for multiples of 5 prints 'buzz' instead of the number.
- * @param {number} number - The number of iterations
- * @returns {void}
- */
-function fizzBuzz(number: number): void {
-    for (let i = 1; i <= number; i++) {
-        if (i % 3 === 0 && i % 5 === 0) {
-            console.log('fizzbuzz');
-        } else if (i % 3 === 0) {
-            console.log('fizz');
-        } else if (i % 5 === 0) {
-            console.log('buzz');
-        } else {
-            console.log(i);
+
+
+function reverseArray(arr: number[]): number[] {
+    // your code here
+    return arr.reverse()
+  }
+  
+  function sumArray(arr: number[]): number {
+    // your code here
+    return arr.reduce((item,sum)=>sum+item,0)
+  }
+  
+  function filterOdd(arr: number[]): number[] {
+    let odd :number[]=[];
+      for (let i=0 ;i<arr.length; i++){
+        if(arr[i]% 2!==0){
+            odd.push(arr[i])
         }
-    }
-}
-
-function duplicate(arrr:number[]): number[] {
-   let duplicate = new Set<number>();
-   let seen =  new Set<number>();
-
-   for(let i = 0; i < arrr.length; i++){
-    if(seen.has(arrr[i])){
-        duplicate.add(arrr[i])
-    }
-    else{
-        seen.add(arrr[i])
-    }
-    }
-
-    return Array.from(duplicate);
-}
-
-function isPrimes(number: number): boolean {
-    // Handle edge cases
-    if (number <= 1) return false;
-    if (number <= 3) return true;  // 2 and 3 are prime
-    
-    // If number is divisible by 2 or 3, it's not prime
-    if (number % 2 === 0 || number % 3 === 0) return false;
-    
-    // Check all possible divisors of form 6k±1 up to sqrt(number)
-    for (let i = 5; i * i <= number; i += 6) {
-        if (number % i === 0 || number % (i + 2) === 0) {
-            return false;
+      }
+    // your code here
+    return odd;
+  }
+  
+  function countTarget(arr: number[], target: number): number {
+    // your code here
+    let count :number =0
+     for(let i=0 ; i <arr.length; i++){
+        if(arr[i]===target){
+            count++
         }
-    }
-    
-    return true;
-}
-
-function sumEven(arr:number[]):number{
-     let sum :number =0
-     for(let i = 0; i <arr.length; i++){
-        if(arr[i]%2 === 0){
-            sum += arr[i]
      }
+    
+     return count 
+  }   
+  
+  function secondMax(arr: number[]): number {
+    // your code here
+
+    if(arr.length < 2){
+        throw new Error('the array must have two elements')
     }
-    return sum
-}
+   let maxNum:number = Math.max(arr[0], arr[1]);
+   let  secondMax:number =Math.min(arr[0],arr[1])
 
-function maxNum(arr:number[]):number{
+   for(let i =2; i< arr.length; i++){
+    if(arr[i]> maxNum){
+        secondMax= maxNum;
+        maxNum=arr[i]
+    }
 
-    let max =arr[0]
+     else if(arr[i] > secondMax && arr[i]< maxNum){
+        secondMax=arr[i]
+     }
 
-    for(let i =1; i< arr.length; i++){
-        if(arr[i]>max){
-            max = arr[i]
+   }
+      return secondMax;
+  }
+  
+
+
+
+
+
+
+  function isPalindrome(str: string): boolean {
+// your code here
+
+
+   let reverseStr :string =str.split("").reverse().join("")
+    
+     return  reverseStr === str
+  }
+  
+  function countVowels(str: string): number {
+    // your code here
+   let numOfVowel :number =0
+   let vovwl =/[aeiou]/i
+    for(let i =0; i <str.length; i++){
+       if(vovwl.test(str[i])){
+        numOfVowel++
+       }
+    }
+
+   return numOfVowel
+  }
+  
+  function capitalizeWords(str: string): string {
+    // your code here
+
+    const capitals = str.split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+
+    return capitals
+  }
+  
+  function repeatString(str: string, count: number): string {
+
+   
+    // your code here
+
+    return  str.repeat(count);
+  }
+  
+  function longestWord(sentence: string): string {
+    // your code here
+    let splitWord = sentence.split(" ")
+    let longest =splitWord[0]
+
+    for (let i =1 ; i < splitWord.length; i++){
+       if(splitWord[i].length > longest.length){
+        longest = splitWord[i]
+       }
+    }
+    
+
+    return longest
+  }
+  
+
+
+
+
+  function countLetters(str: string): Record<string, number> {
+    const count: Record<string, number> = {};
+
+    for (let char of str.toLowerCase()) {
+      
+      count[char] = (count[char] || 0) + 1;
+    }
+
+    return count;
+  }
+
+  
+  function countLetterss(str: string): Record<string, number> {
+    const count: Record<string, number> = {};
+
+     for(let char of str){
+        count[char] = count[char] ? count[char] + 1 : 1
+     }
+        
+       
+
+    return count;
+  }
+
+
+  
+  function objectToArray(obj: Record<string, number>): [string, number][] {
+    // your code here
+     let arr:any=[]
+     for(let key in obj){
+        
+       arr.push([key, arr[key]])
+          
+        
+     }
+     return arr
+
+  }
+  
+  function mergeObjects(obj1: Record<string, number>, obj2: Record<string, number>): Record<string, number> {
+    // your code here
+
+     const result: Record<string, number> = { ...obj1 };
+
+     for (const key in obj2) {
+       result[key] = (result[key] || 0) + obj2[key]
+     }
+     return result
+  }
+  
+  function invertObject(obj: Record<string, string>): Record<string, string> {
+    // your code here
+
+     const result: Record<string, string> = {};
+     for(const key in obj){
+        result[obj[key]] = key.toString()
+     }
+     return result
+
+  }
+  
+  function mostFrequentChar(str: string): string {
+let count :any={}
+let max:string =""
+    for(let char of str){
+        count[char] = count[char] ? count[char] + 1 : 1
+        if(count[char] > count[max]){
+            max=char
         }
-    }
-
-
-
+}
+    // your code here
 
     return max
-}
+  }
+  
 
-function numberOfString(str :string , char:string ):number{
 
-let num :number =0;
+  function findIndex(arr:number[], target:number):number{
 
-for(let i =0; i<str.length; i++){
-    if(str[i] === char){
-        num ++;
+
+    for(let i =0; i <arr.length; i++){
+      if (arr[i]===target) return i
     }
-}
-return num;
+    return -1
+  } 
 
-}
+  function hasPairWithSum(arr :number[], target:number):boolean{
+    let sum :number =0
+    for(let i =0; i<arr.length; i ++){
+
+      for(let j =1; j< arr.length; j++){
+      sum = arr[i]+arr[j]
+      if(sum === target) return true
 
 
-
-
-function countFrequencies(arr: any[]): { [key: string]: number } {
-    // Your code here
-let obj: { [key: string]: number } = {};
-    for (let i = 0; i < arr.length; i++) {
-      if (obj[arr[i]]) {
-        obj[arr[i]]++;
-      } else {
-        obj[arr[i]] = 1;
       }
     }
 
-    return obj
+    return false
   }
-  
 
-  function isPrime(n: number): boolean {
-    // Your code 
+
+
+  function binarySearch(arr: number[], target: number): number {
+    let left: number = 0;
+    let right: number = arr.length - 1;
     
-    if(n <=1) return false;
-    if(n === 2) return true;
-    if(n % 2=== 0) return false;
-
-    for(let i = 3; i *i<= n; i+=2){
-        if(n % i === 0) return false;
+    while (left <= right) {
+        const mid: number = left + Math.floor((right - left) / 2);
+        if (arr[mid] === target) {
+            return mid;
+        }
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
     }
-    return true
+    return -1;
+}
+
+function isPalindromeTwoPointer(str:string):boolean{
+    return str === str.split("").reverse().join();
+}
+
+
+function countPairsWithSum(arr: number[], target:number):number{
+  let count :number=0;
+ let sum :number =0
+    for(let i =0; i<arr.length; i ++){
+
+      for(let j =i+1; j< arr.length; j++){
+      if(arr[i]+arr[j] === target) {
+        count++
+      }
+
+
+      }
+    }
+
+
+  return count
+}
+
+
+function countSubarraysWithAvgAbove(arr: number[], k: number, target: number): number {
+  if (arr.length < k) return 0;
+
+  let count = 0;
+  let windowSum = 0;
+
+  // Initial window
+  for (let i = 0; i < k; i++) {
+    windowSum += arr[i];
   }
-  
 
-  function reverseWords(sentence: string): string {
-    
+  if (windowSum / k >= target) count++;
 
-   return  sentence.split(' ').reverse().join(' ')
-  }
-  
-
-  function removeDuplicates(arr: any[]): any[] {
-    // Your code here
-    let unique = new Set(arr);
-    return Array.from(unique);
+  // Slide the window
+  for (let i = k; i < arr.length; i++) {
+    windowSum = windowSum - arr[i - k] + arr[i];
+    if (windowSum / k >= target) count++;
   }
 
-  function reverseNumber(n: number): number {
-    // Your code here
+  return count;
+}
 
-    return Number(String(n).split('').reverse().join(''))
+
+function minSubArrayLen(target: number, arr: number[]): number {
+
+let sub :number =0
+let ar :number[]=[]
+  // your code here
+  for(let i =0; i<arr.length; i++){
+     ar.push(arr[i])
+     sub += arr[i]
+    if(arr[i]===target) return 1
+ 
+     else {
+      for(let j=i+1; j<arr.length; j++){
+        sub += arr[j]
+        ar.push(arr[j])
+        if(sub === target) return ar.length
+      }
+     }
   }
 
-  function capitalizeWords(sentence: string): string {
-    // Your code here
 
-    return sentence.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+  return 0
+
+}
+
+
+function minSumSubarrayOfSizeK(arr: number[], k: number): number {
+  let minSum = 0;
+  let windowSum = 0;
+
+  // first window
+  for (let i = 0; i < k; i++) {
+    windowSum += arr[i];
   }
-  
-  
+  minSum = windowSum;
+
+  // slide the window
+  for (let i = k; i < arr.length; i++) {
+    windowSum = windowSum + arr[i] - arr[i - k];
+    minSum = Math.min(minSum, windowSum);
+  }
+
+  return minSum;
+}
