@@ -22,6 +22,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (state?.success && state.redirectTo) {
+      console.log(state)
       router.push(state.redirectTo);
     }
   }, [state, router]);
