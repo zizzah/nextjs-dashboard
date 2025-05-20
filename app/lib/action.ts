@@ -129,12 +129,22 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
  * @param formData The form data from the login form
  * @returns A string indicating the error message if authentication fails
  */
+
 export async function authenticate(
-  prevState: string | undefined,
+  _prevState: any,
   formData: FormData,
 ) {
   try {
-    await signIn('credentials', formData);
+    const result = await signIn('credentials', {
+      redirect: false,
+      ...Object.fromEntries(formData),
+    });
+
+    if (result?.error) {
+      return result.error;
+    }
+
+    return { success: true, redirectTo: formData.get('redirectTo') };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -144,6 +154,6 @@ export async function authenticate(
           return 'Something went wrong.';
       }
     }
-    throw error;
+    return 'Unexpected error.';
   }
 }

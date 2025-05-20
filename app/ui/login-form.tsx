@@ -1,5 +1,5 @@
 'use client';
- 
+
 import { lusitana } from '@/app/ui/fonts';
 import {
   AtSymbolIcon,
@@ -10,16 +10,22 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from '@/app/ui/button';
 import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/action';
-import { useSearchParams } from 'next/navigation';
- 
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function LoginForm() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined,
-  );
- 
+
+  const [state, formAction, isPending] = useActionState(authenticate, undefined);
+
+  useEffect(() => {
+    if (state?.success && state.redirectTo) {
+      router.push(state.redirectTo);
+    }
+  }, [state, router]);
+
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
@@ -76,10 +82,10 @@ export default function LoginForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
+          {typeof state === 'string' && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{state}</p>
             </>
           )}
         </div>
