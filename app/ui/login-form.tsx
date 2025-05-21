@@ -21,9 +21,20 @@ export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(authenticate, undefined);
 
   useEffect(() => {
-    if (state?.success && state.redirectTo) {
-      console.log(state)
-      router.push(state.redirectTo);
+    // Add debugging for state changes
+    if (state) {
+      console.log('Authentication state:', state);
+    }
+    
+    // Check if we have a successful authentication state
+    if (state?.success === true) {
+      const redirectPath = state.redirectTo?.toString() || '/dashboard';
+      console.log('Redirecting to:', redirectPath);
+      
+      // Use setTimeout to ensure this runs after the current render cycle
+      setTimeout(() => {
+        router.push(redirectPath);
+      }, 100);
     }
   }, [state, router]);
 

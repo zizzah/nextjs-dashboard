@@ -129,12 +129,14 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
  * @param formData The form data from the login form
  * @returns A string indicating the error message if authentication fails
  */
-
 export async function authenticate(
   _prevState: any,
   formData: FormData,
 ) {
   try {
+    // Extract and ensure redirectTo is a string
+    const redirectTo = formData.get('redirectTo')?.toString() || '/dashboard';
+    
     const result = await signIn('credentials', {
       redirect: false,
       ...Object.fromEntries(formData),
@@ -144,7 +146,11 @@ export async function authenticate(
       return result.error;
     }
 
-    return { success: true, redirectTo: formData.get('redirectTo') };
+    // Return a consistent object structure with explicit string for redirectTo
+    return { 
+      success: true, 
+      redirectTo: redirectTo 
+    };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
