@@ -2,6 +2,22 @@
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 
+/**
+ * A skeleton for a card component.
+ *
+ * The skeleton will display a shimmering animation
+ * while the actual data is being loaded.
+ *
+ * The skeleton consists of a rounded-rectangle container
+ * with a 2px shadow and a gray background.
+ *
+ * Inside the container, there are two elements:
+ * A gray square with a size of 5x5px (for the icon)
+ * A gray rectangle with a size of 16x6px (for the text)
+ *
+ * The actual content will be replaced by the real data
+ * when it is loaded.
+ */
 export function CardSkeleton() {
   return (
     <div

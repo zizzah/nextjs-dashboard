@@ -373,3 +373,71 @@ function minSumSubarrayOfSizeK(arr: number[], k: number): number {
 
   return minSum;
 }
+
+
+
+
+
+function searchRange(nums: any, target: any) {
+  // Helper function to find leftmost (first) index
+  function findFirst(nums: string | any[], target: number) {
+    let left = 0, right = nums.length - 1, result = -1;
+
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+      if (nums[mid] === target) {
+        result = mid;
+        right = mid - 1; // search on the left side
+      } else if (nums[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+    return result;
+  }
+
+  // Helper function to find rightmost (last) index
+  function findLast(nums: string | any[], target: number) {
+
+    let result = -1,  left = 0, right = nums.length - 1;
+
+    while(left <=right){
+      const mid = Math.floor((left + right)/2)
+
+      if(nums[mid] === target){
+        result =mid
+        left = mid + 1
+      }
+      else if(nums[mid] < target){
+        left = mid + 1
+
+      }
+      else{
+        right = mid - 1
+      }
+    }
+    return result;
+  }
+
+  return [findFirst(nums, target), findLast(nums, target)];
+}
+
+
+
+function findPeakElement(nums: number[]): number {
+  let left = 0;
+  let right = nums.length - 1;
+
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (nums[mid] > nums[mid + 1]) {
+      right = mid;
+    } else {
+      left = mid + 1;
+    }
+  }
+
+  return left;
+}
